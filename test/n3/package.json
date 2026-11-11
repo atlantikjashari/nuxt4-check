@@ -1,0 +1,1 @@
+{"name":"acme-shop","dependencies":{"nuxt":"^3.13.2","@nuxtjs/i18n":"^8.5.0","@pinia/nuxt":"^0.5.1","nuxt-icon":"^0.6.0"},"devDependencies":{"typescript":"^5.5.0"}}

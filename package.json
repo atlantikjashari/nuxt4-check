@@ -1,0 +1,39 @@
+{
+  "name": "nuxt4-check",
+  "version": "0.1.0",
+  "description": "Scan a Nuxt 3 project for Nuxt 4 breaking changes. Zero dependencies, read-only, runs in seconds.",
+  "bin": {
+    "nuxt4-check": "bin/nuxt4-check.js"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "nuxt",
+    "nuxt3",
+    "nuxt4",
+    "migration",
+    "upgrade",
+    "vue",
+    "codemod",
+    "eol"
+  ],
+  "author": "Atlantik Jashari <atlantik.jashari@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atlantikjashari/nuxt4-check.git"
+  },
+  "homepage": "https://github.com/atlantikjashari/nuxt4-check#readme",
+  "bugs": {
+    "url": "https://github.com/atlantikjashari/nuxt4-check/issues"
+  }
+}
