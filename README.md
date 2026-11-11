@@ -46,7 +46,17 @@ This is a heuristic scan. It can miss things and flag false positives, so treat 
 
 ## Want it done for you?
 
-I do fixed-price Nuxt 3 → 4 (and Nuxt 2 → 4) upgrades with regression testing, delivered as a reviewable pull request.
+I do fixed-price Nuxt upgrades with regression testing, delivered as one reviewable pull request plus 14 days of fixes after merge.
+
+| Package | Scope | Price |
+|---|---|---|
+| Readiness audit | Manual review, module compatibility table, written plan (credited if you upgrade) | €290 |
+| Small app | Marketing sites and small apps, ~30 pages, a few modules | €1,490 |
+| SaaS / dashboard | Auth, i18n, heavy data fetching, custom modules | from €2,900 |
+| Nuxt 2 → 4 | Full migration incl. Vue 2 → 3 | from €5,900 |
+
+Send your `npx nuxt4-check --md report.md` output and get a fixed quote within two working days.
+
 **Atlantik Jashari** · atlantik.jashari@gmail.com · [LinkedIn](https://linkedin.com/in/atlantikjashari)
 
 ## License
