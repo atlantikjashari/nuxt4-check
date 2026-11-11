@@ -51,9 +51,10 @@ I do fixed-price Nuxt upgrades with regression testing, delivered as one reviewa
 | Package | Scope | Price |
 |---|---|---|
 | Readiness audit | Manual review, module compatibility table, written plan (credited if you upgrade) | €290 |
-| Small app | Marketing sites and small apps, ~30 pages, a few modules | €1,490 |
+| Small app (Nuxt 3 → 4) | Marketing sites and small apps, ~30 pages, a few modules. Includes Nuxt 5 readiness flags | €890 |
 | SaaS / dashboard | Auth, i18n, heavy data fetching, custom modules | from €2,900 |
-| Nuxt 2 → 4 | Full migration incl. Vue 2 → 3 | from €5,900 |
+| Vue 2 / Vuetify 2 → 3 | End-of-life exit for Vue 2 apps (no Nuxt) | from €3,900 |
+| Nuxt 2 → 4 | Full migration incl. Vue 2 → 3 | from €7,900 |
 
 Send your `npx nuxt4-check --md report.md` output and get a fixed quote within two working days.
 
