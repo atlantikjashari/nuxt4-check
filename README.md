@@ -23,6 +23,7 @@ npx nuxt4-check
 | Modules | Lists every Nuxt module you depend on so you can confirm Nuxt 4 support |
 | Structure | v3 layout at the root (optional move into `app/`) |
 | TypeScript | `noUncheckedIndexedAccess` becoming the default |
+| End-of-life deps (new in 0.2) | Nuxt 2, Vue 2, Vuetify 2, Vuex 3 and `@nuxtjs/composition-api`. This also works on plain Vue 2 apps without Nuxt |
 
 You also get a rough effort estimate (small / medium / large).
 

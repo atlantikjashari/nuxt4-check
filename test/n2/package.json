@@ -1,0 +1,1 @@
+{"name":"legacy-shop","dependencies":{"nuxt":"^2.17.3","vue":"^2.7.16","vuex":"^3.6.2","@nuxtjs/composition-api":"^0.33.1","@nuxtjs/vuetify":"^1.12.3","vuetify":"^2.7.2"}}

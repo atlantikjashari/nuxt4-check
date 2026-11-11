@@ -17,4 +17,10 @@ for (const id of ['generate-config', 'null-default', 'dedupe-boolean', 'window-n
 const n4 = run('n4');
 assert.strictEqual(n4.stage, 'nuxt4');
 assert.strictEqual(n4.findings.length, 0, 'clean Nuxt 4 app should have no findings');
+const n2 = run('n2');
+assert.strictEqual(n2.stage, 'nuxt2');
+assert.deepStrictEqual(n2.eol, ['nuxt@2', 'vue@2', 'vuetify@2']);
+const n2ids = n2.findings.map((f) => f.id);
+for (const id of ['eol-nuxt2', 'eol-vue2', 'eol-vuetify2', 'eol-composition-api', 'eol-vuex3']) assert.ok(n2ids.includes(id), `expected finding ${id}`);
+assert.deepStrictEqual(n4.eol, []);
 console.log('All tests passed.');

@@ -1,6 +1,6 @@
 {
   "name": "nuxt4-check",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scan a Nuxt 3 project for Nuxt 4 breaking changes. Zero dependencies, read-only, runs in seconds.",
   "bin": {
     "nuxt4-check": "bin/nuxt4-check.js"

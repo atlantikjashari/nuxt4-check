@@ -11,7 +11,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 const CONTACT = 'atlantik.jashari@gmail.com';
 
 // ---------- args ----------
@@ -82,6 +82,33 @@ else if (major >= 4) stage = 'nuxt4';
 const modulePkgs = Object.keys(allDeps).filter((d) =>
   d !== 'nuxt' && (/^@nuxtjs\//.test(d) || /^@nuxt\//.test(d) || /^nuxt-/.test(d) || /-nuxt$/.test(d) || /\/nuxt$/.test(d))
 );
+
+// ---------- 2b. end-of-life dependencies ----------
+const majorOf = (r) => (r ? parseInt(String(r).replace(/^[^\d]*/, ''), 10) : NaN);
+const eol = [];
+if (stage === 'nuxt2') {
+  eol.push('nuxt@2');
+  add('high', 'eol-nuxt2', `Nuxt 2 (${nuxtRange}) has been end-of-life since 30 June 2024`,
+    'No security patches. Plan a full migration to Nuxt 4 (Vue 3, Nitro, new data fetching); an in-place upgrade is not possible.');
+}
+if (majorOf(allDeps.vue) === 2) {
+  eol.push('vue@2');
+  add('high', 'eol-vue2', `Vue 2 (${allDeps.vue}) has been end-of-life since 31 December 2023`,
+    'No security patches. Migrate components to Vue 3 (the Options API still works; the main changes are filters, event bus, v-model and global API).');
+}
+if (majorOf(allDeps.vuetify) === 2 || majorOf(allDeps['@nuxtjs/vuetify']) === 1) {
+  eol.push('vuetify@2');
+  add('high', 'eol-vuetify2', `Vuetify 2 (${allDeps.vuetify || '@nuxtjs/vuetify ' + allDeps['@nuxtjs/vuetify']}) is end-of-life`,
+    'Vuetify 2 only works with Vue 2 and gets no community security fixes. Vuetify 3 renames many components and props, so budget for UI testing.');
+}
+if (allDeps['@nuxtjs/composition-api']) {
+  add('medium', 'eol-composition-api', '@nuxtjs/composition-api is deprecated (Nuxt 2 bridge era)',
+    'Remove it during the migration; Nuxt 3+/4 has the Composition API built in.');
+}
+if (allDeps.vuex && majorOf(allDeps.vuex) <= 3) {
+  add('medium', 'eol-vuex3', `Vuex ${allDeps.vuex} (Vue 2 era) detected`,
+    'Vuex 3 only works with Vue 2. Move stores to Pinia (recommended) or Vuex 4 as part of the Vue 3 migration.');
+}
 
 // ---------- 3. directory structure ----------
 const LEGACY_APP_DIRS = ['pages', 'components', 'composables', 'layouts', 'middleware', 'plugins', 'utils', 'assets'];
@@ -199,7 +226,7 @@ for (const g of groups) counts[g.severity] += Math.max(1, g.locs.length);
 
 const result = {
   tool: 'nuxt4-check', version: VERSION, project: pkg.name || path.basename(root),
-  nuxt: nuxtRange, stage, filesScanned: files.length, modules: modulePkgs, counts, score, effort,
+  nuxt: nuxtRange, stage, eol, filesScanned: files.length, modules: modulePkgs, counts, score, effort,
   findings: groups.map(({ severity, id, title, fix, locs }) => ({ severity, id, title, fix, locations: locs })),
 };
 
@@ -214,7 +241,8 @@ const out = [];
 out.push('');
 out.push(c('1', `nuxt4-check v${VERSION}`) + `  —  ${result.project}`);
 out.push(`Nuxt version: ${nuxtRange || 'not found'}   Files scanned: ${files.length}`);
-if (stage === 'not-nuxt') out.push(c('33', 'This does not look like a Nuxt project (no nuxt dependency).'));
+if (stage === 'not-nuxt') out.push(c('33', eol.length ? 'Plain Vue project (no nuxt dependency): checking end-of-life dependencies.' : 'This does not look like a Nuxt project (no nuxt dependency).'));
+if (eol.length) out.push(c('31;1', `End-of-life dependencies: ${eol.join(', ')} (no security patches)`));
 if (stage === 'nuxt2') out.push(c('31;1', 'Nuxt 2 detected (EOL since 30 June 2024). This needs a full migration, not just an upgrade.'));
 if (stage === 'nuxt3') out.push(c('33;1', 'Nuxt 3 detected — Nuxt 3 reached end of life on 31 July 2026 (no more security patches).'));
 if (stage === 'nuxt4') out.push(c('32;1', 'Already on Nuxt 4. Remaining items below are informational.'));
@@ -241,7 +269,9 @@ if (stage === 'nuxt3') {
 }
 out.push(c('90', 'This is a heuristic scan; it can miss issues and flag false positives.'));
 out.push('');
-out.push(c('1', 'Want it done for you?') + ` Fixed-price Nuxt 4 upgrades with full regression testing — ${CONTACT}`);
+out.push(c('1', 'Want it done for you?') + (eol.length
+  ? ` Fixed-price Vue 2 / Nuxt 2 exits (from €3,900) with full regression testing — ${CONTACT}`
+  : ` Fixed-price Nuxt 4 upgrades (small apps €890) with full regression testing — ${CONTACT}`));
 out.push('');
 console.log(out.join('\n'));
 
@@ -249,6 +279,7 @@ if (mdOut) {
   const md = [];
   md.push(`# Nuxt 4 readiness report — ${result.project}`, '');
   md.push(`- **Nuxt version:** ${nuxtRange || 'not found'}`);
+  if (eol.length) md.push(`- **End-of-life dependencies:** ${eol.join(', ')}`);
   md.push(`- **Files scanned:** ${files.length}`);
   md.push(`- **Findings:** ${counts.high} high, ${counts.medium} medium, ${counts.low} low`);
   md.push(`- **Estimated effort:** ${effort}`, '');
